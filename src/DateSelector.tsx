@@ -8,7 +8,7 @@ type Props = {
   selectedDate: number;
 };
 
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
 function DateSelector({ dates, selectedDate: initialSelectedDate }: Props) {
   const [selectedDate, setSelectedDate] = useState(initialSelectedDate);

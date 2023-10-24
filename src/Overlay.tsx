@@ -16,7 +16,7 @@ function Overlay() {
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
-          class="bi bi-chevron-left fill-themered-100"
+          className="bi bi-chevron-left fill-themered-100"
           viewBox="0 0 16 16"
         >
           <path
@@ -36,7 +36,7 @@ function Overlay() {
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
-          class="bi bi-chevron-right fill-themered-100"
+          className="bi bi-chevron-right fill-themered-100"
           viewBox="0 0 16 16"
         >
           <path
