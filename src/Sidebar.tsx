@@ -39,7 +39,7 @@ export default function Sidebar() {
             </>
           )}
         </h2>
-        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedInfo.body) }}  />
+        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedInfo.body) }} className="mt-3 text-white/80 mx-5 text-justify"  />
       </div>
     );
   else return <></>;
