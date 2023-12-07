@@ -30,13 +30,13 @@ export default function Sidebar() {
           {selectedInfo.name}
         </h1>
         <h2 className="text-2xl text-themered-100 text-center">
-          {selectedInfo.dateFrom === selectedInfo.dateTo ? (
+          {selectedInfo.dateFrom.getUTCFullYear() === selectedInfo.dateTo.getUTCFullYear() ? (
+            selectedInfo.dateFrom.getUTCFullYear()
+          ) : (
             <>
               {selectedInfo.dateFrom.getUTCFullYear()}-
               {selectedInfo.dateTo.getUTCFullYear()}
             </>
-          ) : (
-            selectedInfo.dateFrom.getUTCFullYear()
           )}
         </h2>
         <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedInfo.body) }}  />
