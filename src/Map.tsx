@@ -3,9 +3,9 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
-  Marker,
 } from "react-simple-maps";
-import CircleMarker from "./CircleMarker";
+import Markers from "./Markers";
+
 
 function Map() {
 
@@ -13,7 +13,7 @@ function Map() {
     <ComposableMap
       projection="geoMercator"
       projectionConfig={{
-        scale: 1000,
+        scale: 700,
       }}
       className="bg-themeblue-500 select-none"
       style={{ height: "100vh", width: "100vw" }}
@@ -35,9 +35,7 @@ function Map() {
             ))
           }
         </Geographies>
-        <Marker coordinates={[2.3522, 48.8566]}>
-          <CircleMarker />
-        </Marker>
+        <Markers />
       </ZoomableGroup>
     </ComposableMap>
   );
