@@ -10,7 +10,7 @@ function Overlay() {
   return (
     <>
       <Sidebar  />
-      <div className="select-none flex absolute right-5 left-5 bottom-5 md:right-24 md:left-24 md:bottom-14 h-20 drop-shadow-lg">
+      <div className="select-none flex absolute right-5 left-5 bottom-5 md:right-10 md:left-10 md:bottom-8 h-20 drop-shadow-lg">
         <LeftArrow onClick={() => setSection(section - 3)} />
         <DateSelector
           dates={range(section + startDate, section + startDate + 5)}
