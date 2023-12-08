@@ -19,6 +19,8 @@
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-simple-maps": "^3.0.0",
+    "tailwind-scrollbar": "^3.0.5",
+    "vite-plugin-svgr": "^4.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

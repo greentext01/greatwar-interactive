@@ -1,7 +1,7 @@
 export function RightArrow(props: React.HTMLProps<HTMLDivElement>) {
   return (
     <div
-      className="w-12 h-full bg-themered-900 rounded-r-3xl flex items-center justify-center"
+      className="w-12 h-full bg-themered-900 flex items-center justify-center"
       {...props}
     >
       <svg
@@ -22,7 +22,7 @@ export function RightArrow(props: React.HTMLProps<HTMLDivElement>) {
 export function LeftArrow(props: React.HTMLProps<HTMLDivElement>) {
   return (
     <div
-      className="w-12 h-full bg-themered-900 rounded-l-3xl flex items-center justify-center"
+      className="w-12 h-full bg-themered-900 flex items-center justify-center"
       {...props}
     >
       <svg
