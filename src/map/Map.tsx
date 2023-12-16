@@ -5,9 +5,9 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 import Markers from "./Markers";
-import yearList from "./yearList.json"
+import yearList from "../data/yearList.json"
 import { useAtom } from "jotai";
-import { dateAtom } from "./DateSelector";
+import { dateAtom } from "../timeline/DateSelector";
 
 function yearToFilename(year: number) {
   let prevYear = 2010;

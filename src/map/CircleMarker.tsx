@@ -1,9 +1,9 @@
 import { useZoomPanContext } from "react-simple-maps";
-import Battle from "./icons/markers/battle.svg?react";
-import Context from "./icons/markers/context.svg?react";
-import Event from "./icons/markers/event.svg?react";
-import Info from "./icons/markers/info.svg?react";
-import Important from "./icons/markers/important.svg?react";
+import Battle from "../icons/markers/battle.svg?react";
+import Context from "../icons/markers/context.svg?react";
+import Event from "../icons/markers/event.svg?react";
+import Info from "../icons/markers/info.svg?react";
+import Important from "../icons/markers/important.svg?react";
 
 const markerMap = {
   battle: Battle,

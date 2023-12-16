@@ -1,16 +1,17 @@
 import CircleMarker from "./CircleMarker";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "./main";
-import { extractLongLat } from "./util";
+import { db } from "../main";
+import { extractLongLat } from "../util";
 import { Marker, useZoomPanContext } from "react-simple-maps";
 import { useAtom } from "jotai";
-import { Info, selectedInfoAtom } from "./Sidebar";
-import { dateAtom } from "./DateSelector";
+import { Info, formShownAtom, selectedInfoAtom } from "../sidebar/Sidebar";
+import { dateAtom } from "../timeline/DateSelector";
 
 export default function Markers() {
   const [value] = useCollection(collection(db, "points"));
   const [selectedInfo, setSelectedInfo] = useAtom(selectedInfoAtom);
+  const [, setFormShown] = useAtom(formShownAtom);
   const [selectedDate] = useAtom(dateAtom);
   const ctx = useZoomPanContext();
 
@@ -41,7 +42,10 @@ export default function Markers() {
                 ? `drop-shadow(0 0 ${7 / ctx.k}px rgb(255 0 0)`
                 : undefined
             }
-            onClick={() => setSelectedInfo(info)}
+            onClick={() => {
+              setSelectedInfo(info);
+              setFormShown(false);
+            }}
           >
             <CircleMarker marker={info.type} />
           </Marker>

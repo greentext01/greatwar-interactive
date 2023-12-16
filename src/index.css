@@ -1,3 +1,55 @@
+@import "react-quill/dist/quill.snow.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: #fff;
+}
+
+.ql-toolbar .ql-fill {
+  fill: #fff;
+  stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+  color: #fff;
+}
+
+.ql-picker-options {
+  color: #000;
+}
+
+.ql-toolbar.ql-snow {
+  @apply border-0 border-b border-b-red-800/50;
+}
+
+.ql-container.ql-snow {
+  border: 0px;
+}
+
+.ql-container.ql-snow {
+  height: auto;
+  @apply relative;
+}
+
+.ql-editor {
+  overflow-y: scroll;
+  color: #fff !important;
+  height: 265px;
+  @apply scrollbar-thumb-themered-200 scrollbar-track-themered-950 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin;
+}
+
+.ql-snow .ql-tooltip {
+  left: 5px !important;
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

@@ -1,13 +1,16 @@
-import DateSelector, { startDate } from "./DateSelector";
+import DateSelector, { startDate } from "./timeline/DateSelector";
 import { useState } from "react";
 import { range } from "./util";
-import { LeftArrow, RightArrow } from "./Arrows";
-import Sidebar from "./Sidebar";
-import Disclaimer from "./Disclaimer";
-import NewPostButton from "./NewPostButton";
+import { LeftArrow, RightArrow } from "./timeline/Arrows";
+import Sidebar, { formShownAtom, selectedInfoAtom } from "./sidebar/Sidebar";
+import Disclaimer from "./map/Disclaimer";
+import NewPostButton from "./sidebar/NewPostButton";
+import { useAtom } from "jotai";
 
 function Overlay() {
   const [section, setSection] = useState(0);
+  const [, setFormShown] = useAtom(formShownAtom);
+  const [, setSelectedInfo] = useAtom(selectedInfoAtom);
 
   return (
     <>
@@ -20,7 +23,12 @@ function Overlay() {
         <RightArrow onClick={() => setSection(section + 3)} />
         <div className="shadow-faintInset h-full w-full rounded-3xl absolute pointer-events-none" />
       </div>
-      <NewPostButton />
+      <NewPostButton
+        onClick={() => {
+          setFormShown(true);
+          setSelectedInfo(undefined);
+        }}
+      />
       <Disclaimer />
     </>
   );
