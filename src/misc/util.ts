@@ -10,15 +10,18 @@ export function extractLongLat(point: GeoPoint): [number, number] {
 }
 
 // From: https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
-// Slightly modified to store strings directly instead of JSON
-export function useStickyState(defaultValue: string, key: string): [string, React.Dispatch<React.SetStateAction<string>>] {
+// Slightly modified to use Typescript
+export function useStickyState<T>(
+  defaultValue: T,
+  key: string
+): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [value, setValue] = useState(() => {
     const stickyValue = window.localStorage.getItem(key);
-    return stickyValue !== null ? stickyValue : defaultValue;
+    return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue;
   });
 
   useEffect(() => {
-    window.localStorage.setItem(key, value);
+    window.localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
 
   return [value, setValue];

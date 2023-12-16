@@ -1,14 +1,17 @@
 import DateSelector, { startDate } from "./timeline/DateSelector";
 import { useState } from "react";
-import { range } from "./util";
+import { range, useStickyState } from "./misc/util";
 import { LeftArrow, RightArrow } from "./timeline/Arrows";
 import Sidebar, { formShownAtom, selectedInfoAtom } from "./sidebar/Sidebar";
 import Disclaimer from "./map/Disclaimer";
 import NewPostButton from "./sidebar/NewPostButton";
 import { useAtom } from "jotai";
+import VersionModal from "./misc/VersionModal";
+import { VERSION } from "./misc/settings";
 
 function Overlay() {
   const [section, setSection] = useState(0);
+  const [modalShown, setModalShown] = useStickyState(true, `modalShown_${VERSION}`);
   const [, setFormShown] = useAtom(formShownAtom);
   const [, setSelectedInfo] = useAtom(selectedInfoAtom);
 
@@ -30,6 +33,7 @@ function Overlay() {
         }}
       />
       <Disclaimer />
+      {modalShown && <VersionModal onClose={() => setModalShown(false)} />}
     </>
   );
 }

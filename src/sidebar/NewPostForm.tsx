@@ -9,7 +9,7 @@ import FormField from "./FormField";
 import { useRef } from "react";
 import ReactQuill from "react-quill";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import { useStickyState } from "../util";
+import { useStickyState } from "../misc/util";
 import useFormPersist from "react-hook-form-persist";
 import Coordinates from "coordinate-parser";
 import Error from "./Error";

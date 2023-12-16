@@ -2,7 +2,7 @@ import CircleMarker from "./CircleMarker";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../main";
-import { extractLongLat } from "../util";
+import { extractLongLat } from "../misc/util";
 import { Marker, useZoomPanContext } from "react-simple-maps";
 import { useAtom } from "jotai";
 import { Info, formShownAtom, selectedInfoAtom } from "../sidebar/Sidebar";
