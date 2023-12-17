@@ -5,6 +5,7 @@ import "./index.css";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { ReCaptchaV3Provider, initializeAppCheck } from "firebase/app-check";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -22,6 +23,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
+initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider("6LcgdzQpAAAAAKS2u1yTcgVXd4ZpRtg-NDc4bkCu"),
+
+  // Optional argument. If true, the SDK automatically refreshes App Check
+  // tokens as needed.
+  isTokenAutoRefreshEnabled: true,
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
