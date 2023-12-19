@@ -12,11 +12,11 @@ export default function UserIcon() {
   else if (user) {
     return (
       <div
-        className="fixed top-10 right-10 z-0"
+        className="fixed top-10 left-10 z-0"
         onMouseEnter={() => setDropdownShown(true)}
         onMouseLeave={() => setDropdownShown(false)}
       >
-        <div className="flex items-center ml-auto justify-center bg-red-600 shadow-evenInset rounded-full w-16 h-16">
+        <div className="flex items-center justify-center bg-red-600 shadow-evenInset rounded-full w-16 h-16">
           <img
             src={user.photoURL || "/Default_pfp.svg"}
             alt="User Icon"
@@ -25,7 +25,7 @@ export default function UserIcon() {
         </div>
         {dropdownShown && (
           <div
-            className="bg-themered-500 font-semibold p-2 px-4 rounded-xl rounded-tr-sm text-white shadow-faintInset cursor-pointer mt-2 w-max 
+            className="bg-themered-500 font-semibold p-2 px-4 rounded-xl rounded-tl-sm text-white shadow-faintInset cursor-pointer mt-2 w-max 
                           flex flex-col divide-y divide-white/50"
           >
             <div
