@@ -5,9 +5,12 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 import Markers from "./Markers";
-import yearList from "../data/yearList.json"
+import yearList from "../data/yearList.json";
 import { useAtom } from "jotai";
-import { dateAtom } from "../timeline/DateSelector";
+import { dateAtom } from "../misc/atoms";
+import { collection } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { db } from "../main";
 
 function yearToFilename(year: number) {
   let prevYear = 2010;
@@ -27,6 +30,7 @@ function yearToFilename(year: number) {
 
 function Map() {
   const [year] = useAtom(dateAtom);
+  const [points] = useCollection(collection(db, "points"));
 
   return (
     <ComposableMap
@@ -54,7 +58,7 @@ function Map() {
             ))
           }
         </Geographies>
-        <Markers />
+        <Markers points={points} />
       </ZoomableGroup>
     </ComposableMap>
   );

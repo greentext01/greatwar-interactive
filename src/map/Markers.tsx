@@ -1,15 +1,28 @@
 import CircleMarker from "./CircleMarker";
-import { collection } from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "../main";
+import { DocumentData, QuerySnapshot } from "firebase/firestore";
 import { extractLongLat } from "../misc/util";
 import { Marker, useZoomPanContext } from "react-simple-maps";
 import { useAtom } from "jotai";
-import { Info, formShownAtom, selectedInfoAtom } from "../sidebar/Sidebar";
-import { dateAtom } from "../timeline/DateSelector";
+import { dateAtom, formShownAtom, selectedInfoAtom } from "../misc/atoms";
+import { Info, InfoType } from "../misc/types";
 
-export default function Markers() {
-  const [value] = useCollection(collection(db, "points"));
+type Props = {
+  points?: QuerySnapshot<DocumentData, DocumentData> | undefined;
+};
+
+function calculateOpacity(dateFrom: Date, dateTo: Date, selectedYear: number) {
+  let temporalDistance = 0;
+  if (selectedYear < dateFrom.getUTCFullYear()) {
+    temporalDistance = dateFrom.getUTCFullYear() - selectedYear;
+  }
+
+  if (selectedYear > dateTo.getUTCFullYear()) {
+    temporalDistance = selectedYear - dateTo.getUTCFullYear();
+  }
+  return 1 - temporalDistance / 5;
+}
+
+export default function Markers({ points }: Props) {
   const [selectedInfo, setSelectedInfo] = useAtom(selectedInfoAtom);
   const [, setFormShown] = useAtom(formShownAtom);
   const [selectedDate] = useAtom(dateAtom);
@@ -17,18 +30,24 @@ export default function Markers() {
 
   return (
     <>
-      {value?.docs.map((doc) => {
-        const info = Info.parse({
-          ...doc.data(),
-          id: doc.id,
-          coordinates: extractLongLat(doc.data().coordinates),
-          dateFrom: doc.data().dateFrom.toDate(),
-          dateTo: doc.data().dateTo.toDate(),
-        });
+      {points?.docs.map((doc) => {
+        let info: InfoType;
+        try {
+          info = Info.parse({
+            ...doc.data(doc.data().dateFrom.toDate()),
+            id: doc.id,
+            coordinates: extractLongLat(doc.data().coordinates),
+            dateFrom: doc.data().dateFrom.toDate(),
+            dateTo: doc.data().dateTo.toDate(),
+          });
+        } catch {
+          console.error("Found corrupted entry in database:", doc.id);
+          return;
+        }
 
         if (
-          selectedDate < info.dateFrom.getUTCFullYear() ||
-          selectedDate > info.dateTo.getUTCFullYear()
+          selectedDate < info.dateFrom.getUTCFullYear() - 5 ||
+          selectedDate > info.dateTo.getUTCFullYear() + 5
         )
           return;
 
@@ -47,7 +66,14 @@ export default function Markers() {
               setFormShown(false);
             }}
           >
-            <CircleMarker marker={info.type} />
+            <CircleMarker
+              marker={info.type}
+              opacity={calculateOpacity(
+                info.dateFrom,
+                info.dateTo,
+                selectedDate
+              )}
+            />
           </Marker>
         );
       })}

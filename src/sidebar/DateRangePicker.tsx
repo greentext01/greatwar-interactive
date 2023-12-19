@@ -1,6 +1,6 @@
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import Input from "./Input";
-import Error from "./Error";
+import Error from "../misc/Error";
 
 type Props = {
   register: UseFormRegister<FieldValues>;

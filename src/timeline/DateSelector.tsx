@@ -1,12 +1,10 @@
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { Fragment } from "react";
+import { dateAtom } from "../misc/atoms";
 
 type Props = {
   dates: number[];
 };
-
-export const startDate = 1914;
-export const dateAtom = atom(startDate);
 
 function DateSelector({ dates }: Props) {
   const [selectedDate, setDate] = useAtom(dateAtom);
