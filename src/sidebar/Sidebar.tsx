@@ -1,28 +1,30 @@
-import { atom, useAtom } from "jotai";
-import { z } from "zod";
+import { useAtom } from "jotai";
 import InfoSidebar from "./InfoSidebar";
 import NewPostForm from "./NewPostForm";
-
-export const Info = z.object({
-  id: z.string(),
-  type: z.enum(["battle", "info", "event", "context", "important"]),
-  body: z.string(),
-  name: z.string(),
-  dateFrom: z.date(),
-  dateTo: z.date(),
-  coordinates: z.array(z.number()).length(2),
-});
-
-export type InfoType = z.infer<typeof Info>;
-
-export const selectedInfoAtom = atom<InfoType | undefined>(undefined);
-export const formShownAtom = atom(false);
+import { formShownAtom, selectedInfoAtom } from "../misc/atoms";
+import { FormOutline } from "./FormOutline";
+import { ErrorBoundary } from "react-error-boundary";
+import { fallbackRender } from "../misc/Error";
 
 export default function Sidebar() {
-  const [selectedInfo] = useAtom(selectedInfoAtom);
-  const [formShown] = useAtom(formShownAtom);
+  const [selectedInfo, setSelectedInfo] = useAtom(selectedInfoAtom);
+  const [formShown, setFormShown] = useAtom(formShownAtom);
 
-  if (formShown) return <NewPostForm />;
-  else if (selectedInfo) return <InfoSidebar selectedInfo={selectedInfo} />;
-  else return <></>
+  if (formShown)
+    return (
+      <FormOutline close={() => setFormShown(false)} width="650px">
+        <ErrorBoundary fallbackRender={fallbackRender}>
+          <NewPostForm />
+        </ErrorBoundary>
+      </FormOutline>
+    );
+  else if (selectedInfo)
+    return (
+      <FormOutline close={() => setSelectedInfo(undefined)} width="600px" height="350px">
+        <ErrorBoundary fallbackRender={fallbackRender}>
+          <InfoSidebar selectedInfo={selectedInfo} />
+        </ErrorBoundary>
+      </FormOutline>
+    );
+  else return <></>;
 }

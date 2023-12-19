@@ -1,1 +1,4 @@
-export const VERSION = "0.1"
+export const settings = {
+  version: "0.2",
+  startDate: 1914,
+};

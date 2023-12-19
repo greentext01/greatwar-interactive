@@ -1,5 +1,5 @@
 import Close from "../icons/close.svg?react";
-import { VERSION } from "./settings";
+import { settings } from "./settings";
 
 export default function VersionModal({onClose}: {onClose: () => void}) {
   return (
@@ -15,7 +15,7 @@ export default function VersionModal({onClose}: {onClose: () => void}) {
             Clipboard History
           </h1>
           <h2 className="font-semibold text-3xl text-red-200 text-center mb-3">
-            Version {VERSION}
+            Version {settings.version}
           </h2>
           <h2 className=" text-lg text-red-200 text-center mb-8">
             <p>
@@ -30,14 +30,18 @@ export default function VersionModal({onClose}: {onClose: () => void}) {
               )
             </p>
             <p>Planning & Communication by Alex and Andre</p>
+            <p>Official bossman: Aidan MacLean</p>
           </h2>
 
           <h2 className="font-semibold text-3xl text-red-200 text-center mb-1">
             Release Notes
           </h2>
           <ul className="list-disc text-red-200 mb-5">
-            <li>Created the website</li>
-            <li>Editing posts hasn't been coded yet. I will add it in a future release.</li>
+            <li>Added accounts</li>
+            <li>Added faded markers</li>
+            <li>Moved around the new post button</li>
+            <li>Added toast notifications</li>
+            <li>Restructured codebase</li>
           </ul>
 
           <p className="text-red-200 text-center">
