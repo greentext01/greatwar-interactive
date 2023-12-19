@@ -1,4 +1,3 @@
-import Close from "../icons/close.svg?react";
 import Input from "./Input";
 import Select from "./Select";
 import DateRangePicker from "./DateRangePicker";
