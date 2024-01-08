@@ -4,6 +4,7 @@ import { Marker, useZoomPanContext } from "react-simple-maps";
 import { useAtom } from "jotai";
 import { dateAtom, sidebarStateAtom } from "../misc/atoms";
 import { InfoType, processInfo } from "../misc/types";
+import { useMemo } from "react";
 
 type Props = {
   points?: QuerySnapshot<DocumentData, DocumentData> | undefined;
@@ -34,31 +35,33 @@ export default function Markers({ points }: Props) {
   const selectedInfo =
     sidebarStatus.kind === "selectedInfo" ? sidebarStatus.info : undefined;
 
-  const infos = points?.docs
-    .map((info) => processInfo(info))
-    .filter((info) => {
-      return (
-        info !== undefined &&
-        selectedDate >= info.dateFrom.getUTCFullYear() - 5 &&
-        selectedDate <= info.dateTo.getUTCFullYear() + 5
-      );
-    })
-    .sort((a, b) => {
-      if (a!.id === selectedInfo?.id) return 1;
-      if (b!.id === selectedInfo?.id) return -1;
-      const aTempDist = calculateTempDistance(
-        a!.dateFrom,
-        a!.dateTo,
-        selectedDate
-      );
-      const bTempDist = calculateTempDistance(
-        b!.dateFrom,
-        b!.dateTo,
-        selectedDate
-      );
+  const infos = useMemo(() => {
+    return points?.docs
+      .map((info) => processInfo(info))
+      .filter((info) => {
+        return (
+          info !== undefined &&
+          selectedDate >= info.dateFrom.getUTCFullYear() - 5 &&
+          selectedDate <= info.dateTo.getUTCFullYear() + 5
+        );
+      })
+      .sort((a, b) => {
+        if (a!.id === selectedInfo?.id) return 1;
+        if (b!.id === selectedInfo?.id) return -1;
+        const aTempDist = calculateTempDistance(
+          a!.dateFrom,
+          a!.dateTo,
+          selectedDate
+        );
+        const bTempDist = calculateTempDistance(
+          b!.dateFrom,
+          b!.dateTo,
+          selectedDate
+        );
 
-      return bTempDist - aTempDist;
-    }) as InfoType[] | undefined;
+        return bTempDist - aTempDist;
+      }) as InfoType[] | undefined;
+  }, [points, selectedDate, selectedInfo?.id]);
 
   return (
     <>
