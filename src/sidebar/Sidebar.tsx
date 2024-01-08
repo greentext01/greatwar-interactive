@@ -1,30 +1,41 @@
 import { useAtom } from "jotai";
 import InfoSidebar from "./InfoSidebar";
 import NewPostForm from "./NewPostForm";
-import { formShownAtom, selectedInfoAtom } from "../misc/atoms";
+import { sidebarStateAtom } from "../misc/atoms";
 import { FormOutline } from "./FormOutline";
 import { ErrorBoundary } from "react-error-boundary";
 import { fallbackRender } from "../misc/Error";
+import MyPosts from "./MyPosts";
 
 export default function Sidebar() {
-  const [selectedInfo, setSelectedInfo] = useAtom(selectedInfoAtom);
-  const [formShown, setFormShown] = useAtom(formShownAtom);
+  const [sidebarStatus] = useAtom(sidebarStateAtom);
 
-  if (formShown)
-    return (
-      <FormOutline close={() => setFormShown(false)} width="650px">
-        <ErrorBoundary fallbackRender={fallbackRender}>
-          <NewPostForm />
-        </ErrorBoundary>
-      </FormOutline>
-    );
-  else if (selectedInfo)
-    return (
-      <FormOutline close={() => setSelectedInfo(undefined)} width="600px" height="350px">
-        <ErrorBoundary fallbackRender={fallbackRender}>
-          <InfoSidebar selectedInfo={selectedInfo} />
-        </ErrorBoundary>
-      </FormOutline>
-    );
-  else return <></>;
+  switch (sidebarStatus.kind) {
+    case "formShown":
+      return (
+        <FormOutline width="650px">
+          <ErrorBoundary fallbackRender={fallbackRender}>
+            <NewPostForm post={sidebarStatus.info} />
+          </ErrorBoundary>
+        </FormOutline>
+      );
+    case "selectedInfo":
+      return (
+        <FormOutline width="600px" height="350px">
+          <ErrorBoundary fallbackRender={fallbackRender}>
+            <InfoSidebar selectedInfo={sidebarStatus.info} />
+          </ErrorBoundary>
+        </FormOutline>
+      );
+    case "myPostsShown":
+      return (
+        <FormOutline width="650px">
+          <ErrorBoundary fallbackRender={fallbackRender}>
+            <MyPosts />
+          </ErrorBoundary>
+        </FormOutline>
+      );
+    case "closed":
+      return <></>;
+  }
 }

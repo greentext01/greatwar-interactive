@@ -1,13 +1,16 @@
+import { useSetAtom } from "jotai";
 import Close from "../icons/close.svg?react";
+import { sidebarStateAtom } from "../misc/atoms";
 
 type Props = {
   children: React.ReactNode;
-  close: () => void;
   width: string;
   height?: string;
 };
 
-export function FormOutline({ children, close, width, height }: Props) {
+export function FormOutline({ children, width, height }: Props) {
+  const setSidebarStatus = useSetAtom(sidebarStateAtom);
+
   return (
     <div className="relative z-10" style={{ width: width }}>
       <div
@@ -19,12 +22,11 @@ export function FormOutline({ children, close, width, height }: Props) {
         style={{ height: height ?? 400 }}
       >
         <div
-          className="p-4 bg-themered-500 overflow-auto scrollbar-thumb-themered-200 h-full
-      scrollbar-track-themered-950 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin"
+          className="p-4 bg-themered-500 overflow-auto h-full scrollbar-theme"
         >
           <Close
             className="left-4 top-4 w-6 h-6 cursor-pointer absolute bg-red-950/50 rounded-full p-1"
-            onClick={() => close()}
+            onClick={() => setSidebarStatus({ kind: "closed" })}
           />
           {children}
         </div>

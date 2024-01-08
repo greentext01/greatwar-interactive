@@ -1,11 +1,12 @@
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import Input from "./Input";
 import Error from "../misc/Error";
+import { FormValsType } from "./NewPostForm";
 
 type Props = {
-  register: UseFormRegister<FieldValues>;
-  namePrefix: string;
-  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FormValsType>;
+  namePrefix: "start" | "end";
+  errors: FieldErrors<FormValsType>;
 };
 
 export default function DateRangePicker({

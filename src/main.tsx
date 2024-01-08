@@ -4,7 +4,12 @@ import App from "./App.tsx";
 import "./index.css";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import {
+  connectFirestoreEmulator,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+} from "firebase/firestore";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { ReCaptchaV3Provider, initializeAppCheck } from "firebase/app-check";
 
@@ -23,21 +28,29 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getFirestore(app);
 const auth = getAuth(app);
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager(),
+  }),
+});
 
 if (import.meta.env.DEV) {
   connectAuthEmulator(auth, "http://localhost:9099", { disableWarnings: true });
   connectFirestoreEmulator(db, "localhost", 8080);
 }
 
-initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("6LcgdzQpAAAAAKS2u1yTcgVXd4ZpRtg-NDc4bkCu"),
+if (!import.meta.env.DEV) {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(
+      "6LcgdzQpAAAAAKS2u1yTcgVXd4ZpRtg-NDc4bkCu"
+    ),
 
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
-  isTokenAutoRefreshEnabled: true,
-});
+    // Optional argument. If true, the SDK automatically refreshes App Check
+    // tokens as needed.
+    isTokenAutoRefreshEnabled: true,
+  });
+}
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

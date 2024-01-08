@@ -5,7 +5,7 @@ import Event from "../icons/markers/event.svg?react";
 import Info from "../icons/markers/info.svg?react";
 import Important from "../icons/markers/important.svg?react";
 
-const markerMap = {
+export const markerMap = {
   battle: Battle,
   context: Context,
   event: Event,

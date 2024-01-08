@@ -3,10 +3,13 @@ import { auth } from "../main";
 import { useState } from "react";
 import { signOut } from "firebase/auth";
 import SignInButton from "./SignInButton";
+import { sidebarStateAtom } from "../misc/atoms";
+import { useSetAtom } from "jotai";
 
 export default function UserIcon() {
   const [user, loading] = useAuthState(auth);
   const [dropdownShown, setDropdownShown] = useState(false);
+  const setSidebarStatus = useSetAtom(sidebarStateAtom);
 
   if (loading) return <></>;
   else if (user) {
@@ -25,9 +28,10 @@ export default function UserIcon() {
         </div>
         {dropdownShown && (
           <div
-            className="bg-themered-500 font-semibold p-2 px-4 rounded-xl rounded-tl-sm text-white shadow-faintInset cursor-pointer mt-2 w-max 
-                          flex flex-col divide-y divide-white/50"
+            className="bg-themered-500 font-semibold p-2 px-4 rounded-xl rounded-tl-sm text-white/90 shadow-faintInset cursor-pointer mt-2 w-max 
+                          flex flex-col divide-y divide-white/25"
           >
+            <div className="py-2 px-4 hover:text-gray-300" onClick={() => setSidebarStatus({kind: "myPostsShown"})}>My posts</div>
             <div
               className="py-2 px-4 hover:text-gray-300"
               onClick={() => signOut(auth)}

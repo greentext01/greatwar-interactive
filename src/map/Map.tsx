@@ -7,7 +7,7 @@ import {
 import Markers from "./Markers";
 import yearList from "../data/yearList.json";
 import { useAtom } from "jotai";
-import { dateAtom } from "../misc/atoms";
+import { zoomPanAtom, dateAtom } from "../misc/atoms";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../main";
@@ -30,7 +30,9 @@ function yearToFilename(year: number) {
 
 function Map() {
   const [year] = useAtom(dateAtom);
-  const [points] = useCollection(collection(db, "points"));
+  const collectionRef = collection(db, "points");
+  const [points] = useCollection(collectionRef);
+  const [zoomPan, setZoomPan] = useAtom(zoomPanAtom);
 
   return (
     <ComposableMap
@@ -41,7 +43,11 @@ function Map() {
       className="bg-themeblue-500 select-none"
       style={{ height: "100vh", width: "100vw" }}
     >
-      <ZoomableGroup center={[3, 52]}>
+      <ZoomableGroup
+        center={zoomPan.coordinates}
+        zoom={zoomPan.zoom}
+        onMoveEnd={(p) => setZoomPan(p)}
+      >
         <Geographies
           geography={`${yearToFilename(year)}`}
           fill="#060c29"

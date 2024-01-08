@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /points/{point} {
+    	allow read, write: if true;
+                    
+    }
+  }
+}
+
+
+      // allow create: if request.resource.data.dateFrom < request.resource.data.dateTo
+      //               && request.resource.data.name.size() < 100
+      //               && request.resource.data.body.size() < 10000
+      //               && request.resource.data.coordinates is timestamp
+      //               && request.auth.uid != null
+      //               && request.resource.data.ownerId == request.auth.uid
+      //               && request.resource.data.ownerName == request.auth.token.name
+      //               && request.resource.data.type in ["battle", "info", "event", "context", "important"];

@@ -1,7 +1,5 @@
 ## To Do
-* Feedback when posting
 * Editing/deleting posts
-* Firebase security rules
 * Preview button
 * Country labels
 * Timeline limits
@@ -11,6 +9,8 @@
 * Phone support
 
 ## Done
+* Firebase security rules
 * Accounts
 * Domain
 * Faded markers
+* Feedback when posting

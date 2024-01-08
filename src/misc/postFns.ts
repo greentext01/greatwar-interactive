@@ -1,18 +1,21 @@
-import { FieldValues, UseFormSetError } from "react-hook-form";
+import { UseFormSetError } from "react-hook-form";
 import { RefObject } from "react";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import Coordinates from "coordinate-parser";
 import { db } from "../main";
-import { GeoPoint, addDoc, collection, Timestamp } from "firebase/firestore";
+import { GeoPoint, addDoc, collection, Timestamp, updateDoc, doc } from "firebase/firestore";
 import { User } from "firebase/auth";
 import ReactQuill from "react-quill";
-import { Post } from "./types";
+import { InfoType, Post } from "./types";
+import { FormValsType, NewPostData } from "../sidebar/NewPostForm";
+
 
 export async function makePost(
   user: User | null | undefined,
   formData: any,
-  setError: UseFormSetError<FieldValues>,
-  quillRef: RefObject<ReactQuill>
+  setError: UseFormSetError<FormValsType>,
+  quillRef: RefObject<ReactQuill>,
+  originalPostId?: string,
 ) {
   let errorOccured = false;
   if (!user) {
@@ -44,9 +47,9 @@ export async function makePost(
     errorOccured = true;
   }
 
-  const converter = new QuillDeltaToHtmlConverter(
-    quillRef.current?.getEditor().getContents().ops ?? []
-  );
+  const delta = quillRef.current?.getEditor().getContents().ops ?? [];
+
+  const converter = new QuillDeltaToHtmlConverter(delta);
 
   formData.description = converter.convert();
   // Convert HMS coords to decimal
@@ -78,7 +81,31 @@ export async function makePost(
     type: formData.type,
     ownerId: user.uid,
     ownerName: user.displayName ?? "Anonymous",
+    delta: JSON.stringify(delta),
   };
 
-  await addDoc(collection(db, "points"), data);
+  if (originalPostId) {
+    const docRef = doc(db, "points", originalPostId)
+    await updateDoc(docRef, data);
+    return "Post updated!"
+  } else {
+    await addDoc(collection(db, "points"), data);
+    return "Post added!"
+  }
+}
+
+export function firebaseToForm(post: InfoType): NewPostData {
+  return {
+    title: post.name,
+    startYear: post.dateFrom.getUTCFullYear(),
+    startMonth: post.dateFrom.getUTCMonth() + 1,
+    startDay: post.dateFrom.getUTCDate() + 2,
+    endYear: post.dateTo.getUTCFullYear(),
+    endMonth: post.dateTo.getUTCMonth() + 1,
+    endDay: post.dateTo.getUTCDate() + 2,
+    type: post.type,
+    coordinates: `${post.coordinates[1]}, ${post.coordinates[0]}`,
+    id: post.id,
+    delta: JSON.parse(post.delta),
+  };
 }

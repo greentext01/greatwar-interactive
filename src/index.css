@@ -53,3 +53,11 @@
     margin: 0;
   }
 }
+
+.scrollbar-theme {
+  @apply scrollbar-thumb-themered-200 scrollbar-track-themered-950 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin;
+}
+
+.truncate-children > * {
+  @apply truncate
+}

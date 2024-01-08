@@ -1,14 +1,14 @@
 import {
   FieldPath,
-  FieldValues,
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
+import { FormValsType } from "./NewPostForm";
 
 type Props = {
-  register: UseFormRegister<FieldValues>;
-  registerArgs?: RegisterOptions<FieldValues, FieldPath<FieldValues>>;
-  name: string;
+  register: UseFormRegister<FormValsType>;
+  registerArgs?: RegisterOptions<FormValsType, FieldPath<FormValsType>>;
+  name: keyof FormValsType;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
