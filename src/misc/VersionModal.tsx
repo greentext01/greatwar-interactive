@@ -13,7 +13,7 @@ export default function VersionModal({ onClose }: { onClose: () => void }) {
           onClick={onClose}
         />
         <div
-          className="p-4 mx-2 gap-1 flex flex-col items-center overflow overflow-auto h-full w-full scrollbar-theme"
+          className="p-4 mx-2 gap-1 flex flex-col items-center overflow overflow-auto h-full w-full scrollbar-theme max-w-3xl"
         >
           <img src="/icon.png" alt="Icon" width="150" height="150" />
           <h1 className="font-bold text-5xl text-white text-center">
@@ -24,7 +24,7 @@ export default function VersionModal({ onClose }: { onClose: () => void }) {
           </h2>
           <h2 className=" text-lg text-red-200 text-center mb-8">
             <p>
-              Website made by Olivier (
+              Idea, website, planning by Olivier (
               <a
                 href="https://github.com/greentext01/greatwar-interactive"
                 target="_blank"
@@ -42,11 +42,8 @@ export default function VersionModal({ onClose }: { onClose: () => void }) {
             Release Notes
           </h2>
           <ul className="list-disc text-red-200 mb-5">
-            <li>Added accounts</li>
-            <li>Added faded markers</li>
-            <li>Moved around the new post button</li>
-            <li>Added toast notifications</li>
-            <li>Restructured codebase</li>
+            <li>i forgot 💀</li>
+            <li>Phone support will be added in a later update</li>
           </ul>
 
           <p className="text-red-200 text-center">
