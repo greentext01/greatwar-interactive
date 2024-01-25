@@ -79,7 +79,7 @@ export default function InfoSidebar({
         />
       </h2>
       <h3 className="font-semibold text-themered-100 text-center mt-2">
-        Written by {selectedInfo.ownerName ?? "Anonymous"}
+        Posted by {selectedInfo.ownerName ?? "Anonymous"}
       </h3>
       <div
         dangerouslySetInnerHTML={{
