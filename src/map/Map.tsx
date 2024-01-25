@@ -46,6 +46,7 @@ function Map() {
       <ZoomableGroup
         center={zoomPan.coordinates}
         zoom={zoomPan.zoom}
+        minZoom={0.7}
         onMoveEnd={(p) => setZoomPan(p)}
       >
         <Geographies

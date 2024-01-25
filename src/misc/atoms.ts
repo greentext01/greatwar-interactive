@@ -25,4 +25,4 @@ export type SidebarState = DiscriminatedUnion<{
 
 export const sidebarStateAtom = atom<SidebarState>({ kind: "closed" });
 export const dateAtom = persistentAtom("selectedDate", settings.startDate);
-export const zoomPanAtom = atom<ZoomPan>({ coordinates: [0, 49], zoom: 1 });
+export const zoomPanAtom = atom<ZoomPan>({ coordinates: [-100, 60], zoom: 0.7 });
