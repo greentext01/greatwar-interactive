@@ -57,7 +57,7 @@ export default function NewPostForm({ post }: Props) {
   const [user] = useAuthState(auth);
   const [submitDisabled, setSubmitDisabled] = useState(false);
 
-  useFormPersist("newPostForm", {
+  useFormPersist(post ? `newPostForm-${post.id}` : "newPostForm", {
     watch,
     setValue: setFormValue,
     storage: window.localStorage,
