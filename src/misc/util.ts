@@ -1,4 +1,5 @@
 import { GeoPoint } from "firebase/firestore";
+import { atom } from "jotai";
 import { useEffect, useState } from "react";
 
 export function range(a: number, b: number): number[] {
@@ -25,4 +26,25 @@ export function useStickyState<T>(
   }, [key, value]);
 
   return [value, setValue];
+}
+
+export function persistentAtom<T>(key: string, initialValue: T) {
+  const getInitialValue: () => T = () => {
+    const item = localStorage.getItem(key)
+    if (item !== null) {
+      return JSON.parse(item)
+    }
+    return initialValue
+  }
+  const baseAtom = atom<T>(getInitialValue())
+  const derivedAtom = atom(
+    (get) => get(baseAtom),
+    (get, set, update) => {
+      const nextValue =
+        typeof update === 'function' ? update(get(baseAtom)) : update
+      set(baseAtom, nextValue)
+      localStorage.setItem(key, JSON.stringify(nextValue))
+    },
+  )
+  return derivedAtom
 }

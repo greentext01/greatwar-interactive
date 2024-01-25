@@ -16,7 +16,7 @@ import { sidebarStateAtom } from "./misc/atoms";
 const Sidebar = React.lazy(() => import("./sidebar/Sidebar"));
 
 function Overlay() {
-  const [section, setSection] = useState(settings.startDate);
+  const [section, setSection] = useStickyState(settings.startDate, "section");
   const [modalShown, setModalShown] = useStickyState(
     true,
     `modalShown_${settings.version}`
