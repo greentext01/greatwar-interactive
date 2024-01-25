@@ -85,7 +85,7 @@ export default function InfoSidebar({
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(selectedInfo.body),
         }}
-        className="mt-3 text-white/80 mx-5 text-justify break-words"
+        className="mt-3 text-white/80 mx-5 text-justify break-words rich-display"
       />
     </div>
   );

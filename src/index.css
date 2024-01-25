@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.rich-display a {
+  @apply underline text-blue-700;
+}
+
 .ql-toolbar .ql-stroke {
   fill: none;
   stroke: #fff;
