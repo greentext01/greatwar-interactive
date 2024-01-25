@@ -30,21 +30,25 @@ export function useStickyState<T>(
 
 export function persistentAtom<T>(key: string, initialValue: T) {
   const getInitialValue: () => T = () => {
-    const item = localStorage.getItem(key)
+    const item = localStorage.getItem(key);
     if (item !== null) {
-      return JSON.parse(item)
+      try {
+        return JSON.parse(item);
+      } catch {
+        return initialValue;
+      }
     }
-    return initialValue
-  }
-  const baseAtom = atom<T>(getInitialValue())
+    return initialValue;
+  };
+  const baseAtom = atom<T>(getInitialValue());
   const derivedAtom = atom(
     (get) => get(baseAtom),
     (get, set, update) => {
       const nextValue =
-        typeof update === 'function' ? update(get(baseAtom)) : update
-      set(baseAtom, nextValue)
-      localStorage.setItem(key, JSON.stringify(nextValue))
-    },
-  )
-  return derivedAtom
+        typeof update === "function" ? update(get(baseAtom)) : update;
+      set(baseAtom, nextValue);
+      localStorage.setItem(key, JSON.stringify(nextValue));
+    }
+  );
+  return derivedAtom;
 }

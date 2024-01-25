@@ -1,5 +1,5 @@
 import DateSelector from "./timeline/DateSelector";
-import React, { useState } from "react";
+import React from "react";
 import { range, useStickyState } from "./misc/util";
 import { LeftArrow, RightArrow } from "./timeline/Arrows";
 import Disclaimer from "./map/Disclaimer";
