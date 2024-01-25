@@ -73,7 +73,7 @@ export default function NewPostForm({ post }: Props) {
         },
         success: (msg) => {
           if (!post) setValue("");
-          localStorage.removeItem("newPostForm");
+          localStorage.removeItem(post ? `newPostForm-${post.id}` : "newPostForm");
           reset();
           return msg;
         },
